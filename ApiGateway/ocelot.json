@@ -1,0 +1,89 @@
+{
+  "Routes": [
+    {
+      "SwaggerKey": "ReviewService",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7087
+        }
+      ],
+      "DownstreamPathTemplate": "/api/Review",
+      "DownstreamScheme": "https",
+      "UpstreamPathTemplate": "/gateway/review",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "RateLimitOptions": {
+        "ClientWhitelist": [],
+        "EnableRateLimiting": true,
+        "Period": "1s",
+        "PeriodTimespan": 1,
+        "Limit": 5
+      },
+      "FileCacheOptions": {
+        "TtlSeconds": 30
+      }
+    },
+    {
+      "SwaggerKey": "CatalogService",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7285
+        }
+      ],
+      "DownstreamPathTemplate": "/api/Product",
+      "DownstreamScheme": "https",
+      "UpstreamPathTemplate": "/gateway/product",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "RateLimitOptions": {
+        "ClientWhitelist": [],
+        "EnableRateLimiting": true,
+        "Period": "1s",
+        "PeriodTimespan": 1,
+        "Limit": 5
+      },
+      "FileCacheOptions": {
+        "TtlSeconds": 30
+      }
+    }
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "https://localhost:7000",
+    "RateLimitOptions": {
+      "ClientIdHeader": "ClientId",
+      "RateLimitCounterPrefix": "ocelot",
+      "HttpStatusCode": 429
+    },
+    "QoSOptions": {
+      "DurationOfBreak": 1,
+      "ExceptionsAllowedBeforeBreaking": 0,
+      "TimeoutValue": 0
+    }
+  },
+  "SwaggerEndPoints": [
+    {
+      "Key": "ReviewService",
+      "Config": [
+        {
+          "Name": "Review Service API",
+          "Version": "v1",
+          "Url": "https://localhost:7087/swagger/v1/swagger.json"
+        }
+      ],
+      "TransformByOcelotConfig": true,
+      "RemoveUnusedComponentsFromScheme": true
+    },
+    {
+      "Key": "CatalogService",
+      "Config": [
+        {
+          "Name": "Catalog Service API",
+          "Version": "v1",
+          "Url": "https://localhost:7285/swagger/v1/swagger.json"
+        }
+      ],
+      "TransformByOcelotConfig": true,
+      "RemoveUnusedComponentsFromScheme": true
+    }
+  ]
+}
